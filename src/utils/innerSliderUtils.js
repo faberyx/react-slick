@@ -578,14 +578,14 @@ export const getTrackCSS = spec => {
   };
   if (spec.useTransform) {
     let WebkitTransform = !spec.vertical
-      ? "translate3d(" + spec.left + "px, 0px, 0px)"
-      : "translate3d(0px, " + spec.left + "px, 0px)";
+      ? "translate3d(" + spec.left + 30 + "px, 0px, 0px)"
+      : "translate3d(0px, " + spec.left + 30 +"px, 0px)";
     let transform = !spec.vertical
-      ? "translate3d(" + spec.left + "px, 0px, 0px)"
-      : "translate3d(0px, " + spec.left + "px, 0px)";
+      ? "translate3d(" + spec.left + 30 + "px, 0px, 0px)"
+      : "translate3d(0px, " + spec.left + 30 + "px, 0px)";
     let msTransform = !spec.vertical
-      ? "translateX(" + spec.left + "px)"
-      : "translateY(" + spec.left + "px)";
+      ? "translateX(" + spec.left + 30 + "px)"
+      : "translateY(" + spec.left + 30 + "px)";
     style = {
       ...style,
       WebkitTransform,
