@@ -1,5 +1,5 @@
 {
-  "name": "react-slick",
+  "name": "react-slick-everest",
   "version": "0.24.0",
   "description": " React port of slick carousel",
   "main": "./lib",
@@ -109,7 +109,7 @@
       "git add"
     ]
   },
-  "npmName": "react-slick",
+  "npmName": "react-slick-everest",
   "npmFileMap": [
     {
       "basePath": "/dist/",
