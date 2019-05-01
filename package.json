@@ -1,6 +1,6 @@
 {
   "name": "react-slick-everest",
-  "version": "0.24.0",
+  "version": "0.24.3",
   "description": " React port of slick carousel",
   "main": "./lib",
   "files": [

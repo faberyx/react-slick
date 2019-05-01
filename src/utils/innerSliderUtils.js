@@ -48,7 +48,7 @@ export const getSwipeDirection = (touchObject, verticalSwiping = false) => {
   xDist = touchObject.startX - touchObject.curX;
   yDist = touchObject.startY - touchObject.curY;
   r = Math.atan2(yDist, xDist);
-  swipeAngle = Math.round(r * 180 / Math.PI);
+  swipeAngle = Math.round((r * 180) / Math.PI);
   if (swipeAngle < 0) {
     swipeAngle = 360 - Math.abs(swipeAngle);
   }
@@ -195,7 +195,7 @@ export const slideHandler = spec => {
       finalSlide = animationSlide + slideCount;
       if (!infinite) finalSlide = 0;
       else if (slideCount % slidesToScroll !== 0)
-        finalSlide = slideCount - slideCount % slidesToScroll;
+        finalSlide = slideCount - (slideCount % slidesToScroll);
     } else if (!canGoNext(spec) && animationSlide > currentSlide) {
       animationSlide = finalSlide = currentSlide;
     } else if (centerMode && animationSlide >= slideCount) {
@@ -226,7 +226,10 @@ export const slideHandler = spec => {
       state = {
         animating: true,
         currentSlide: finalSlide,
-        trackStyle: getTrackAnimateCSS({ ...spec, left: animationLeft }),
+        trackStyle: getTrackAnimateCSS({
+          ...spec,
+          left: animationLeft
+        }),
         lazyLoadedList
       };
       nextState = {
@@ -265,7 +268,8 @@ export const changeSlide = (spec, options) => {
     slideOffset = indexOffset === 0 ? slidesToScroll : indexOffset;
     targetSlide = currentSlide + slideOffset;
     if (lazyLoad && !infinite) {
-      targetSlide = (currentSlide + slidesToScroll) % slideCount + indexOffset;
+      targetSlide =
+        ((currentSlide + slidesToScroll) % slideCount) + indexOffset;
     }
   } else if (options.message === "dots") {
     // Click on dots
@@ -477,7 +481,10 @@ export const swipeEnd = (e, spec) => {
   } else {
     // Adjust the track back to it's original position.
     let currentLeft = getTrackLeft(spec);
-    state["trackStyle"] = getTrackAnimateCSS({ ...spec, left: currentLeft });
+    state["trackStyle"] = getTrackAnimateCSS({
+      ...spec,
+      left: currentLeft
+    });
   }
   return state;
 };
@@ -577,15 +584,16 @@ export const getTrackCSS = spec => {
     WebkitTransition: ""
   };
   if (spec.useTransform) {
+    let leftTransform = parseInt(spec.left) + parseInt(spec.transformOffset);
     let WebkitTransform = !spec.vertical
-      ? "translate3d(" + spec.left + 30 + "px, 0px, 0px)"
-      : "translate3d(0px, " + spec.left + 30 +"px, 0px)";
+      ? "translate3d(" + leftTransform + "px, 0px, 0px)"
+      : "translate3d(0px, " + leftTransform + "px, 0px)";
     let transform = !spec.vertical
-      ? "translate3d(" + spec.left + 30 + "px, 0px, 0px)"
-      : "translate3d(0px, " + spec.left + 30 + "px, 0px)";
+      ? "translate3d(" + leftTransform + "px, 0px, 0px)"
+      : "translate3d(0px, " + leftTransform + "px, 0px)";
     let msTransform = !spec.vertical
-      ? "translateX(" + spec.left + 30 + "px)"
-      : "translateY(" + spec.left + 30 + "px)";
+      ? "translateX(" + leftTransform + "px)"
+      : "translateY(" + leftTransform + "px)";
     style = {
       ...style,
       WebkitTransform,
@@ -704,7 +712,7 @@ export const getTrackLeft = spec => {
       slideCount % slidesToScroll !== 0 &&
       slideIndex + slidesToScroll > slideCount
     ) {
-      slidesToOffset = slidesToShow - slideCount % slidesToScroll;
+      slidesToOffset = slidesToShow - (slideCount % slidesToScroll);
     }
     if (centerMode) {
       slidesToOffset = parseInt(slidesToShow / 2);
