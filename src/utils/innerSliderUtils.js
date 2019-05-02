@@ -584,7 +584,7 @@ export const getTrackCSS = spec => {
     WebkitTransition: ""
   };
   if (spec.useTransform) {
-    var leftTransform = 0;
+    var leftTransform = parseInt(spec.left) + parseInt(spec.transformOffset);
     if (parseInt(window.innerWidth) > parseInt(spec.mobileWidth)) {
       var offsetAmount =
         parseInt(spec.left) < 0 - parseInt(spec.transformOffset)
