@@ -584,11 +584,14 @@ export const getTrackCSS = spec => {
     WebkitTransition: ""
   };
   if (spec.useTransform) {
-    var offsetAmount =
-      parseInt(spec.left) < 0 - parseInt(spec.transformOffset)
-        ? spec.transformOffset
-        : 0;
-    var leftTransform = parseInt(spec.left) + parseInt(offsetAmount);
+    var leftTransform = 0;
+    if (parseInt(window.innerWidth) > parseInt(spec.mobileWidth)) {
+      var offsetAmount =
+        parseInt(spec.left) < 0 - parseInt(spec.transformOffset)
+          ? spec.transformOffset
+          : 0;
+      leftTransform = parseInt(spec.left) + parseInt(offsetAmount);
+    }
 
     let WebkitTransform = !spec.vertical
       ? "translate3d(" + leftTransform + "px, 0px, 0px)"
