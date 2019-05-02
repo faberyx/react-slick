@@ -584,13 +584,18 @@ export const getTrackCSS = spec => {
     WebkitTransition: ""
   };
   if (spec.useTransform) {
-    var leftTransform = parseInt(spec.left) + parseInt(spec.transformOffset);
-    if (parseInt(window.innerWidth) > parseInt(spec.mobileWidth)) {
-      var offsetAmount =
-        parseInt(spec.left) < 0 - parseInt(spec.transformOffset)
-          ? spec.transformOffset
-          : 0;
-      leftTransform = parseInt(spec.left) + parseInt(offsetAmount);
+    var leftTransform = parseInt(spec.left);
+
+    if (spec.itemCount > 1) {
+      leftTransform += parseInt(spec.transformOffset);
+
+      if (parseInt(window.innerWidth) > parseInt(spec.mobileWidth)) {
+        var offsetAmount =
+          parseInt(spec.left) < 0 - parseInt(spec.transformOffset)
+            ? spec.transformOffset
+            : 0;
+        leftTransform = parseInt(spec.left) + parseInt(offsetAmount);
+      }
     }
 
     let WebkitTransform = !spec.vertical
