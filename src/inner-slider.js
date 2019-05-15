@@ -106,8 +106,6 @@ export class InnerSlider extends React.Component {
     } else {
       window.attachEvent("onresize", this.onWindowResized);
     }
-    window.addEventListener("touchstart", this.touchStart);
-    window.addEventListener("touchmove", this.preventTouch, { passive: false });
   };
   componentWillUnmount = () => {
     if (this.animationEndCallback) {
@@ -128,10 +126,6 @@ export class InnerSlider extends React.Component {
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
     }
-    window.removeEventListener("touchstart", this.touchStart);
-    window.removeEventListener("touchmove", this.preventTouch, {
-      passive: false
-    });
   };
   componentWillReceiveProps = nextProps => {
     let spec = {
@@ -199,25 +193,6 @@ export class InnerSlider extends React.Component {
     if (this.debouncedResize) this.debouncedResize.cancel();
     this.debouncedResize = debounce(() => this.resizeWindow(setTrackStyle), 50);
     this.debouncedResize();
-  };
-
-  touchStart = e => {
-    this.firstClientX = e.touches[0].clientX;
-    this.firstClientY = e.touches[0].clientY;
-  };
-
-  preventTouch = e => {
-    const minValue = 5; // threshold
-
-    this.clientX = e.touches[0].clientX - this.firstClientX;
-    this.clientY = e.touches[0].clientY - this.firstClientY;
-
-    // Vertical scrolling does not work when you start swiping horizontally.
-    if (Math.abs(this.clientX) > minValue && e.cancelable) {
-      e.preventDefault();
-      e.returnValue = false;
-      return false;
-    }
   };
 
   resizeWindow = (setTrackStyle = true) => {
