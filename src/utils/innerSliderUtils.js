@@ -801,7 +801,9 @@ var getTrackCSS = function getTrackCSS(spec) {
     var leftTransform = parseInt(spec.left);
     if (spec.itemCount > 1) {
       if (0 - parseInt(spec.left) < parseInt(spec.centerPadding)) {
-        leftTransform += spec.centerPadding;
+        if (parseInt(window.innerWidth) < parseInt(spec.mobileWidth)) {
+          leftTransform += spec.centerPadding;
+        }
       } else {
         leftTransform += spec.centerPadding + 7;
       }
